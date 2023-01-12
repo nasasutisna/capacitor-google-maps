@@ -292,64 +292,64 @@ public class CapacitorGoogleMaps: CustomMapViewEvents {
     }
 
     @objc func addPolyline(_ call: CAPPluginCall) {
-        let mapId: String = call.getString("mapId", "")
-        let points = call.getArray("points", JSObject())
-
-        DispatchQueue.main.async {
-
-            guard let customMapView = self.customWebView?.customMapViews[mapId] else {
-                call.reject("map not found")
-                return
-            }
-
-            let path = GMSMutablePath()
-
-            for point in points ?? [] {
-                let coords = CLLocationCoordinate2D(latitude: point["latitude"] as! CLLocationDegrees, longitude: point["longitude"] as! CLLocationDegrees)
-                path.add(coords)
-            }
-
-            let polyline = GMSPolyline(path: path)
-
-            polyline.map = customMapView.GMapView
-            call.resolve()
-        }
+//        let mapId: String = call.getString("mapId", "")
+//        let points = call.getArray("points", "")
+//
+//        DispatchQueue.main.async {
+//
+//            guard let customMapView = self.customWebView?.customMapViews[mapId] else {
+//                call.reject("map not found")
+//                return
+//            }
+//
+//            let path = GMSMutablePath()
+//
+//            for point in points ?? [] {
+//                let coords = CLLocationCoordinate2D(latitude: point["latitude"] as! CLLocationDegrees, longitude: point["longitude"] as! CLLocationDegrees)
+//                path.add(coords)
+//            }
+//
+//            let polyline = GMSPolyline(path: path)
+//
+//            polyline.map = customMapView.GMapView
+//            call.resolve()
+//        }
     }
 
     @objc func addPolygon(_ call: CAPPluginCall) {
-        let mapId: String = call.getString("mapId", "")
-        let points = call.getArray("points", JSObject())
-
-        DispatchQueue.main.async {
-
-            guard let customMapView = self.customWebView?.customMapViews[mapId] else {
-                call.reject("map not found")
-                return
-            }
-
-            let path = GMSMutablePath()
-
-            for point in points ?? [] {
-                let coords = CLLocationCoordinate2D(
-                    latitude: point["latitude"] as! CLLocationDegrees,
-                    longitude: point["longitude"] as! CLLocationDegrees
-                )
-                path.add(coords)
-            }
-
-            let polygon = GMSPolygon(path: path)
-            polygon.map = customMapView.GMapView
-
-            call.resolve()
-        }
+//        let mapId: String = call.getString("mapId", "")
+//        let points = call.getArray("points", JSObject())
+//
+//        DispatchQueue.main.async {
+//
+//            guard let customMapView = self.customWebView?.customMapViews[mapId] else {
+//                call.reject("map not found")
+//                return
+//            }
+//
+//            let path = GMSMutablePath()
+//
+//            for point in points ?? [] {
+//                let coords = CLLocationCoordinate2D(
+//                    latitude: point["latitude"] as! CLLocationDegrees,
+//                    longitude: point["longitude"] as! CLLocationDegrees
+//                )
+//                path.add(coords)
+//            }
+//
+//            let polygon = GMSPolygon(path: path)
+//            polygon.map = customMapView.GMapView
+//
+//            call.resolve()
+//        }
     }
 
     @objc func addCircle(_ call: CAPPluginCall) {
         let radius = call.getDouble("radius") ?? 0.0
         let mapId: String = call.getString("mapId", "")
         let center = call.getObject("center")
-        let fillColor = call.getObject("fillColor")
-        let strokeColor = call.getObject("strokeColor")
+        let fillColor: String = call.getString("fillColor","")
+        let strokeColor: String = call.getString("strokeColor","")
 
         let coordinates = CLLocationCoordinate2D(
             latitude: center?["latitude"] as! CLLocationDegrees,
@@ -363,7 +363,10 @@ public class CapacitorGoogleMaps: CustomMapViewEvents {
             }
 
             let circleCenter = coordinates
-            let circle = GMSCircle(position: circleCenter, radius: radius, fillColor: fillColor, strokeColor: strokeColor)
+            let circle = GMSCircle(position: circleCenter, radius: radius)
+            circle.fillColor = UIColor(red:0, green: 0.5, blue: 0, alpha: 0.3)
+            circle.strokeColor = UIColor(red:0, green: 0.5, blue: 0, alpha: 0.5)
+            circle.strokeWidth = 2
             circle.map = customMapView.GMapView
 
             call.resolve()
