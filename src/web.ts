@@ -33,6 +33,9 @@ import {
   DidEndMovingCameraCallback,
   DefaultEventOptions,
   DefaultEventWithPreventDefaultOptions,
+  CircleOptions,
+  PolygonOptions,
+  PolylineOptions
 } from "./definitions";
 
 export class CapacitorGoogleMapsWeb
