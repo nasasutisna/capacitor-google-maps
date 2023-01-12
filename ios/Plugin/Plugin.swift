@@ -292,7 +292,7 @@ public class CapacitorGoogleMaps: CustomMapViewEvents {
     }
 
     @objc func addPolyline(_ call: CAPPluginCall) {
-
+        let mapId: String = call.getString("mapId", "")
         let points = call.getArray("points", JSObject())
 
         DispatchQueue.main.async {
@@ -317,7 +317,7 @@ public class CapacitorGoogleMaps: CustomMapViewEvents {
     }
 
     @objc func addPolygon(_ call: CAPPluginCall) {
-
+        let mapId: String = call.getString("mapId", "")
         let points = call.getArray("points", JSObject())
 
         DispatchQueue.main.async {
@@ -346,8 +346,10 @@ public class CapacitorGoogleMaps: CustomMapViewEvents {
 
     @objc func addCircle(_ call: CAPPluginCall) {
         let radius = call.getDouble("radius") ?? 0.0
-
+        let mapId: String = call.getString("mapId", "")
         let center = call.getObject("center")
+        let fillColor = call.getObject("fillColor")
+        let strokeColor = call.getObject("strokeColor")
 
         let coordinates = CLLocationCoordinate2D(
             latitude: center?["latitude"] as! CLLocationDegrees,
@@ -361,7 +363,7 @@ public class CapacitorGoogleMaps: CustomMapViewEvents {
             }
 
             let circleCenter = coordinates
-            let circle = GMSCircle(position: circleCenter, radius: radius)
+            let circle = GMSCircle(position: circleCenter, radius: radius, fillColor: fillColor, strokeColor: strokeColor)
             circle.map = customMapView.GMapView
 
             call.resolve()
