@@ -48,7 +48,7 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
-    implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
+    implementation group: 'com.google.android.libraries.maps', name: 'maps', version: '3.1.0-beta'
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     implementation 'com.caverock:androidsvg-aar:1.4'
 }
